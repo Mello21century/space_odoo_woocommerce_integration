@@ -7,7 +7,8 @@
   <h2 style="color:#875A7B;">What it does</h2>
   <ul style="line-height:1.9;">
     <li><b>Free-To-Use Stock API</b> — one REST endpoint (<code>GET /api/v1/stock</code>) returning
-      <code>barcode</code>, <code>product_id</code> and <code>stock</code> for every product with a barcode.
+      <code>barcode</code>, <code>product_id</code>, <code>stock</code> and <code>sale_price</code>
+      for every product with a barcode.
       The stock figure is Odoo's <i>Free To Use</i> quantity (on hand minus reservations), so
       external systems never oversell reserved goods.</li>
     <li><b>Multiple API tokens</b> — generate as many tokens as you need, each with its own
@@ -43,8 +44,8 @@
   "https://your-odoo.example.com/api/v1/stock?limit=100"
 
 {"count": 2, "results": [
-  {"barcode": "6291041500213", "product_id": 42, "stock": 17.0},
-  {"barcode": "6291041500220", "product_id": 43, "stock": 0.0}]}</pre>
+  {"barcode": "6291041500213", "product_id": 42, "stock": 17.0, "sale_price": 25.5},
+  {"barcode": "6291041500220", "product_id": 43, "stock": 0.0, "sale_price": 9.99}]}</pre>
 
   <h2 style="color:#875A7B;">Monitoring</h2>
   <p><i>Inbound Orders</i> shows every order received from the store with its result; errors keep the
