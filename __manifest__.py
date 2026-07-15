@@ -22,11 +22,6 @@ WooCommerce on POS/Sales activity, and WooCommerce order import into Odoo.
         'views/menus.xml',
         'data/ir_cron.xml',
     ],
-    'assets': {
-        'point_of_sale._assets_pos': [
-            'space_odoo_woocommerce_integration/static/src/pos_stock_guard.js',
-        ],
-    },
     'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
