@@ -8,7 +8,7 @@ WooCommerce on POS/Sales activity, and WooCommerce order import into Odoo.
     'author': 'Mello21century',
     'website': 'https://github.com/Mello21century/space_odoo_woocommerce_integration',
     'category': 'Sales',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'license': 'LGPL-3',
     'depends': ['stock', 'sale_management', 'point_of_sale'],
     'data': [
