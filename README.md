@@ -2,9 +2,10 @@
 
 Free (LGPL-3) Odoo module connecting Odoo and WooCommerce:
 
-- **Free-To-Use stock API** — `GET /api/v1/stock` returns `{barcode, product_id, stock}`
-  where `stock` is Odoo's *Free To Use* quantity (on hand − reserved), so external systems
-  never see stock that is already promised.
+- **Free-To-Use stock API** — `GET /api/v1/stock` returns
+  `{barcode, product_id, stock, sale_price}` where `stock` is Odoo's *Free To Use* quantity
+  (on hand − reserved), so external systems never see stock that is already promised, and
+  `sale_price` is the product's public sales price.
 - **Multiple API tokens** — each with its own expiration; stored hashed, shown once.
 - **Automatic stock push to WooCommerce** — POS orders, sales order confirmations and stock
   reservations queue batched `stock_quantity` updates to Woo products matched by

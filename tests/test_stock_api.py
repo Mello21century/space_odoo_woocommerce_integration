@@ -15,6 +15,7 @@ class TestStockApi(HttpCase):
             'name': 'API Test Product',
             'is_storable': True,
             'barcode': 'API-TEST-0001',
+            'list_price': 25.5,
         })
         warehouse = cls.env['stock.warehouse'].search(
             [('company_id', '=', cls.env.company.id)], limit=1)
@@ -33,9 +34,10 @@ class TestStockApi(HttpCase):
         data = json.loads(response.content)
         self.assertEqual(data['count'], 1)
         row = data['results'][0]
-        self.assertEqual(set(row), {'barcode', 'product_id', 'stock'})
+        self.assertEqual(set(row), {'barcode', 'product_id', 'stock', 'sale_price'})
         self.assertEqual(row['product_id'], self.product.id)
         self.assertEqual(row['stock'], self.product.free_qty)
+        self.assertEqual(row['sale_price'], 25.5)
 
     def test_stock_is_free_qty_not_on_hand(self):
         # Reserve 4 units via a delivery: on hand stays 10, free drops to 6.

@@ -36,6 +36,7 @@ class SpaceWooStockApi(http.Controller):
             'barcode': product.barcode,
             'product_id': product.id,
             'stock': product.free_qty,
+            'sale_price': product.list_price,
         } for product in products]
         return self._json({'count': len(results), 'results': results})
 
