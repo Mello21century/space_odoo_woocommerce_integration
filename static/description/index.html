@@ -19,6 +19,11 @@
     <li><b>Order import from WooCommerce</b> — a Woo webhook delivers new store orders to Odoo:
       customer (matched by email or created), products, quantities, sold prices, discount and
       delivery fees. The sales order is confirmed automatically so stock is reduced.</li>
+    <li><b>Out-of-stock sales guard</b> — optionally block POS and Sales from selling units
+      that are no longer free to use (already claimed by an online order or another register).
+      Enable it in Settings &rarr; WooCommerce Integration.</li>
+    <li><b>Invoice &amp; payment automation</b> — per connection, imported store orders can get a
+      posted invoice and a registered payment (the shopper already paid online).</li>
     <li><b>Safe by design</b> — HMAC-verified webhooks, idempotent order import (no duplicates),
       failed orders held in a visible log with a readable reason and a Retry button.</li>
   </ul>
