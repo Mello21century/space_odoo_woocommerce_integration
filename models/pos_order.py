@@ -23,6 +23,8 @@ class ProductProduct(models.Model):
         publish stale availability right after a POS sale.
         """
         self.ensure_one()
+        # sudo: called from the stock-push cron, which must see POS lines of
+        # all users/sessions regardless of the cron user's POS access.
         lines = self.env['pos.order.line'].sudo().search([
             ('product_id', '=', self.id),
             ('order_id.session_id.state', '!=', 'closed'),
