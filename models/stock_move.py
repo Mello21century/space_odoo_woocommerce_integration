@@ -20,6 +20,6 @@ class StockMove(models.Model):
         return moves
 
     def _space_woo_enqueue(self):
-        products = self.product_id.filtered(lambda product: product.type == 'product')
+        products = self.product_id.filtered(lambda product: product.is_storable)
         if products:
             self.env['space.woo.stock.queue']._enqueue(products)

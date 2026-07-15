@@ -89,7 +89,7 @@ class TestStockQueue(WooCase):
 
     def test_barcodeless_products_not_enqueued(self):
         no_barcode = self.env['product.product'].create(
-            {'name': 'No Barcode', 'type': 'product'})
+            {'name': 'No Barcode', 'is_storable': True})
         self.env['space.woo.stock.queue']._enqueue(no_barcode)
         self.assertFalse(self.env['space.woo.stock.queue'].search(
             [('product_id', '=', no_barcode.id)]))

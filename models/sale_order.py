@@ -7,7 +7,7 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         result = super().action_confirm()
         products = self.order_line.product_id.filtered(
-            lambda product: product.type == 'product')
+            lambda product: product.is_storable)
         if products:
             self.env['space.woo.stock.queue']._enqueue(products)
         return result

@@ -13,7 +13,7 @@ class TestStockApi(HttpCase):
         super().setUpClass()
         cls.product = cls.env['product.product'].create({
             'name': 'API Test Product',
-            'type': 'product',
+            'is_storable': True,
             'barcode': 'API-TEST-0001',
         })
         warehouse = cls.env['stock.warehouse'].search(

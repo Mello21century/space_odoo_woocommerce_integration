@@ -25,7 +25,7 @@ class SpaceWooStockApi(http.Controller):
         except ValueError:
             limit, offset = 500, 0
 
-        domain = [('barcode', '!=', False), ('type', '=', 'product')]
+        domain = [('barcode', '!=', False), ('is_storable', '=', True)]
         if barcode:
             domain.append(('barcode', '=', barcode))
         products = env['product.product'].search(

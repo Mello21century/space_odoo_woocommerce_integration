@@ -96,7 +96,7 @@ class TestWebhookEndpoint(HttpCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product = cls.env['product.product'].create({
-            'name': 'Webhook Product', 'type': 'product',
+            'name': 'Webhook Product', 'is_storable': True,
             'barcode': 'WOO-TEST-0001',
         })
         warehouse = cls.env['stock.warehouse'].search(

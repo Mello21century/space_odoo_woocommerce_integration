@@ -4,12 +4,12 @@
         <field name="name">space.woo.api.token.tree</field>
         <field name="model">space.woo.api.token</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="expiration_date"/>
                 <field name="last_used"/>
                 <field name="active" widget="boolean_toggle"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -48,7 +48,7 @@
     <record id="action_woo_api_token" model="ir.actions.act_window">
         <field name="name">API Tokens</field>
         <field name="res_model">space.woo.api.token</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Generate your first API token</p>
             <p>Use the "Generate API Token" action; the token value is shown once.</p>

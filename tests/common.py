@@ -10,7 +10,7 @@ class WooCase(TransactionCase):
             [('company_id', '=', cls.env.company.id)], limit=1)
         cls.product = cls.env['product.product'].create({
             'name': 'Woo Test Product',
-            'type': 'product',
+            'is_storable': True,
             'barcode': 'WOO-TEST-0001',
             'list_price': 10.0,
         })
