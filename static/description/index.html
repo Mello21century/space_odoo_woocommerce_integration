@@ -1,0 +1,57 @@
+<section style="max-width:960px;margin:0 auto;font-family:sans-serif;color:#333;">
+  <div style="background:linear-gradient(135deg,#875A7B,#6e3c64);border-radius:12px;padding:40px;text-align:center;color:#fff;margin-bottom:32px;">
+    <h1 style="margin:0 0 8px;font-size:34px;">WooCommerce Inventory &amp; Sales Integration</h1>
+    <p style="margin:0;font-size:18px;opacity:.9;">Free-to-use stock API &bull; Token security &bull; Automatic stock push &bull; Order import</p>
+  </div>
+
+  <h2 style="color:#875A7B;">What it does</h2>
+  <ul style="line-height:1.9;">
+    <li><b>Free-To-Use Stock API</b> — one REST endpoint (<code>GET /api/v1/stock</code>) returning
+      <code>barcode</code>, <code>product_id</code> and <code>stock</code> for every product with a barcode.
+      The stock figure is Odoo's <i>Free To Use</i> quantity (on hand minus reservations), so
+      external systems never oversell reserved goods.</li>
+    <li><b>Multiple API tokens</b> — generate as many tokens as you need, each with its own
+      expiration date. Tokens are stored hashed and shown only once.</li>
+    <li><b>Stock push to WooCommerce</b> — POS orders, sales order confirmations and stock
+      reservations automatically queue a stock update for the matching WooCommerce product
+      (matched by Odoo barcode = Woo SKU). Updates are batched and never slow down checkout.</li>
+    <li><b>Order import from WooCommerce</b> — a Woo webhook delivers new store orders to Odoo:
+      customer (matched by email or created), products, quantities, sold prices, discount and
+      delivery fees. The sales order is confirmed automatically so stock is reduced.</li>
+    <li><b>Safe by design</b> — HMAC-verified webhooks, idempotent order import (no duplicates),
+      failed orders held in a visible log with a readable reason and a Retry button.</li>
+  </ul>
+
+  <h2 style="color:#875A7B;">Setup in 4 steps</h2>
+  <ol style="line-height:1.9;">
+    <li><b>Connect the store</b> — <i>WooCommerce Integration &rarr; Store Connections</i>: enter your
+      store URL and the REST API consumer key/secret (WooCommerce &rarr; Settings &rarr; Advanced &rarr;
+      REST API), pick a warehouse, then click <i>Test Connection</i>.</li>
+    <li><b>Configure the webhook</b> — in WooCommerce (&rarr; Settings &rarr; Advanced &rarr; Webhooks) add an
+      <i>Order created</i> webhook pointing to
+      <code>https://&lt;your-odoo&gt;/woo/webhook/order/&lt;connection id&gt;</code> with the same secret
+      you saved on the connection. Optionally add <i>Order updated</i> for cancellations/refunds.</li>
+    <li><b>Match products</b> — set each Odoo product's <i>Barcode</i> to the WooCommerce product
+      <i>SKU</i>. Matching is automatic from there; make sure "Manage stock" is enabled on the Woo
+      product.</li>
+    <li><b>Create an API token</b> (optional) — <i>WooCommerce Integration &rarr; Generate API Token</i>,
+      copy the one-time value, and call the stock API from any external system.</li>
+  </ol>
+
+  <h2 style="color:#875A7B;">Stock API example</h2>
+  <pre style="background:#2d2d2d;color:#eee;padding:16px;border-radius:8px;overflow-x:auto;">curl -H "Authorization: Bearer YOUR_TOKEN" \
+  "https://your-odoo.example.com/api/v1/stock?limit=100"
+
+{"count": 2, "results": [
+  {"barcode": "6291041500213", "product_id": 42, "stock": 17.0},
+  {"barcode": "6291041500220", "product_id": 43, "stock": 0.0}]}</pre>
+
+  <h2 style="color:#875A7B;">Monitoring</h2>
+  <p><i>Inbound Orders</i> shows every order received from the store with its result; errors keep the
+  raw payload and can be retried after you fix the cause (e.g. a missing barcode). <i>Stock Push
+  Queue</i> shows pending/failed pushes with a requeue action.</p>
+
+  <h2 style="color:#875A7B;">Compatibility &amp; license</h2>
+  <p>Odoo 17 / 18 / 19, Community and Enterprise. Free, LGPL-3.
+  Source &amp; issues: <a href="https://github.com/Mello21century/space_odoo_woocommerce_integration">GitHub repository</a>.</p>
+</section>

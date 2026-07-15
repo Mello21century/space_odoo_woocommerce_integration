@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_woo_api_token_system,space.woo.api.token system,model_space_woo_api_token,base.group_system,1,1,1,1
+access_woo_api_token_wizard_system,space.woo.api.token.wizard system,model_space_woo_api_token_wizard,base.group_system,1,1,1,1
+access_woo_connection_system,space.woo.connection system,model_space_woo_connection,base.group_system,1,1,1,1
+access_woo_product_map_system,space.woo.product.map system,model_space_woo_product_map,base.group_system,1,1,1,1
+access_woo_stock_queue_system,space.woo.stock.queue system,model_space_woo_stock_queue,base.group_system,1,1,1,1
+access_woo_order_log_system,space.woo.order.log system,model_space_woo_order_log,base.group_system,1,1,1,1
+access_woo_order_log_sale_manager,space.woo.order.log sale manager,model_space_woo_order_log,sales_team.group_sale_manager,1,0,0,0

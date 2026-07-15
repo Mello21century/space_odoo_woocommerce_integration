@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_woo_root" name="WooCommerce Integration"
+              groups="base.group_system" web_icon="space_odoo_woocommerce_integration,static/description/icon.png"/>
+    <menuitem id="menu_woo_connections" name="Store Connections"
+              parent="menu_woo_root" action="action_woo_connection" sequence="10"/>
+    <menuitem id="menu_woo_order_log" name="Inbound Orders"
+              parent="menu_woo_root" action="action_woo_order_log" sequence="20"/>
+    <menuitem id="menu_woo_stock_queue" name="Stock Push Queue"
+              parent="menu_woo_root" action="action_woo_stock_queue" sequence="30"/>
+    <menuitem id="menu_woo_tokens" name="API Tokens"
+              parent="menu_woo_root" action="action_woo_api_token" sequence="40"/>
+    <menuitem id="menu_woo_token_generate" name="Generate API Token"
+              parent="menu_woo_root" action="action_woo_api_token_wizard" sequence="50"/>
+</odoo>
