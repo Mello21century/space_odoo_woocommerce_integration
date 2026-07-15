@@ -128,8 +128,27 @@ class WooOrderLog(models.Model):
             order_values['warehouse_id'] = connection.warehouse_id.id
         order = self.env['sale.order'].create(order_values)
         order.action_confirm()
+        if connection.auto_invoice:
+            self._create_invoice_and_payment(order)
         self.write({'state': 'done', 'sale_order_id': order.id,
                     'error_message': False})
+
+    def _create_invoice_and_payment(self, order):
+        """The shopper already paid on the store: post the invoice and
+        register the payment in the connection's journal."""
+        try:
+            invoices = order._create_invoices(final=True)
+        except Exception as error:
+            raise ValueError(_(
+                'Could not invoice %(order)s: %(error)s (products imported '
+                'from the store should use the "Ordered quantities" '
+                'invoicing policy).', order=order.name, error=error))
+        invoices.action_post()
+        self.env['account.payment.register'].with_context(
+            active_model='account.move', active_ids=invoices.ids,
+        ).create({
+            'journal_id': self.connection_id.payment_journal_id.id,
+        }).action_create_payments()
 
     def _find_or_create_partner(self, billing):
         email = (billing.get('email') or '').strip().lower()

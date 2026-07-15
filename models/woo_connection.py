@@ -35,6 +35,16 @@ class WooConnection(models.Model):
         'product.product', string='Shipping Product',
         domain=[('type', '=', 'service')],
         help="Service product used for the delivery fee line.")
+    auto_invoice = fields.Boolean(
+        string='Invoice & Register Payment',
+        help="After importing a store order, create and post the invoice and "
+             "register its payment (the shopper already paid online).")
+    payment_journal_id = fields.Many2one(
+        'account.journal', string='Payment Journal',
+        domain="[('type', 'in', ('bank', 'cash'))]",
+        check_company=True,
+        help="Journal receiving the online payments (e.g. the payment "
+             "provider's bank journal).")
     state = fields.Selection([
         ('draft', 'Draft'),
         ('connected', 'Connected'),
@@ -47,6 +57,14 @@ class WooConnection(models.Model):
         ('store_url_company_uniq', 'unique(store_url, company_id)',
          'This store is already configured for this company.'),
     ]
+
+    @api.constrains('auto_invoice', 'payment_journal_id')
+    def _check_auto_invoice(self):
+        for connection in self:
+            if connection.auto_invoice and not connection.payment_journal_id:
+                raise ValidationError(_(
+                    'Set a Payment Journal to invoice and register payments '
+                    'automatically.'))
 
     @api.constrains('store_url')
     def _check_store_url(self):

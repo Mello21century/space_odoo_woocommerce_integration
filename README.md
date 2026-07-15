@@ -10,6 +10,17 @@ Free (LGPL-3) Odoo module connecting Odoo and WooCommerce:
 - **Automatic stock push to WooCommerce** — POS orders, sales order confirmations and stock
   reservations queue batched `stock_quantity` updates to Woo products matched by
   Odoo **barcode** = Woo **SKU**.
+- **Out-of-stock sales guard** (optional, Settings → WooCommerce Integration) — blocks POS
+  add-to-cart and sales order confirmation when the requested quantity exceeds the
+  *free-to-use* quantity in that terminal's/order's warehouse, also counting units already
+  sold on any open POS session. Closes the race where a walk-in customer buys the last unit
+  that an online order just claimed. The POS popup fails open when the server is unreachable
+  (an offline till keeps selling; the server-side check remains the net).
+  *Note: the POS frontend guard currently ships on the `17.0` branch only; the Sales-side
+  block works on all branches.*
+- **Invoice & payment for store orders** (optional, per connection) — since the shopper
+  already paid online, the imported order can automatically get a posted invoice and a
+  registered payment in a journal of your choice.
 - **Order import from WooCommerce** — HMAC-verified webhook creates confirmed Odoo sales
   orders with customer, sold prices, discounts and delivery fees; stock is reduced. Idempotent
   (no duplicates); failures are held in a log with a Retry button.

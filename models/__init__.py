@@ -1,3 +1,4 @@
+from . import res_config_settings
 from . import woo_api_token
 from . import woo_connection
 from . import woo_product_map

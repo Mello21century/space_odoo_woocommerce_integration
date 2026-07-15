@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.space.woo</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="WooCommerce Integration" string="WooCommerce Integration"
+                     name="space_odoo_woocommerce_integration" groups="base.group_system">
+                    <block title="Stock Guard">
+                        <setting string="Block Out-of-Stock Sales"
+                                 help="Prevent POS and Sales from selling units that are no longer free to use (reserved by online orders or already sold on an open POS session).">
+                            <field name="space_woo_block_out_of_stock"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
