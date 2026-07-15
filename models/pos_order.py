@@ -16,6 +16,29 @@ class PosOrder(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
+    @api.model
+    def space_woo_pos_available(self, product_id, config_id):
+        """Called by the POS frontend before adding a product to the cart.
+
+        Returns {'enabled': False} when the guard is off or the product is
+        not storable, else {'enabled': True, 'available': qty} where qty is
+        the free-to-use quantity in the POS terminal's warehouse minus units
+        already sold on any open POS session.
+        """
+        enabled = self.env['ir.config_parameter'].sudo().get_param(
+            'space_woo.block_out_of_stock')
+        product = self.browse(product_id).exists()
+        if not enabled or not product or product.type != 'product':
+            return {'enabled': False}
+        config = self.env['pos.config'].browse(config_id).exists()
+        warehouse = config.picking_type_id.warehouse_id
+        if warehouse:
+            product = product.with_context(warehouse=warehouse.id)
+        return {
+            'enabled': True,
+            'available': product.free_qty - product._space_woo_open_pos_qty(),
+        }
+
     def _space_woo_open_pos_qty(self):
         """Qty sold in POS orders whose stock moves are not yet done.
 

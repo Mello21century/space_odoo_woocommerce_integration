@@ -81,6 +81,23 @@ class TestOrderImport(WooCase):
         self.assertEqual(log.state, 'skipped')
         self.assertFalse(log.sale_order_id)
 
+    def test_auto_invoice_and_payment(self):
+        journal = self.env['account.journal'].search([
+            ('type', '=', 'bank'),
+            ('company_id', '=', self.env.company.id),
+        ], limit=1)
+        self.connection.write({
+            'payment_journal_id': journal.id,
+            'auto_invoice': True,
+        })
+        log = self._receive(order_payload())
+        self.assertEqual(log.state, 'done', log.error_message)
+        invoice = log.sale_order_id.invoice_ids
+        self.assertEqual(len(invoice), 1)
+        self.assertEqual(invoice.state, 'posted')
+        self.assertIn(invoice.payment_state, ('paid', 'in_payment'))
+        self.assertAlmostEqual(invoice.amount_untaxed, 22.5)
+
     def test_cancellation_of_imported_order(self):
         log = self._receive(order_payload())
         order = log.sale_order_id
